@@ -1,4 +1,5 @@
 # url_encoder
+[![Build Status](https://travis-ci.org/kurt-nj/url_encoder.svg?branch=master)](https://travis-ci.org/kurt-nj/url_encoder)
 
 Simple header only library that performs percent encoding as defined by [RFC 3986](https://tools.ietf.org/html/rfc3986).
 
