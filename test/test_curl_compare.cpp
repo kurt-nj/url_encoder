@@ -1,6 +1,5 @@
 #include "catch.hpp"
 
-#include <iostream>
 #include <curl/curl.h>
 #include "url_encoder.hpp"
 
@@ -44,7 +43,6 @@ TEST_CASE("normal curl comparison", "[curl.normal]") {
         auto curl_e = easy_escape(curl_ptr, example);
         auto url_e = url_encoder::encode(example);
         REQUIRE(curl_e == url_e);
-        std::cout << curl_e << " :: " << url_e << std::endl;
 
         auto curl_d = easy_unescape(curl_ptr, curl_e);
         auto url_d = url_encoder::decode(url_e);
@@ -57,7 +55,6 @@ TEST_CASE("normal curl comparison", "[curl.normal]") {
         auto curl_e = easy_escape(curl_ptr, example);
         auto url_e = url_encoder::encode(example);
         REQUIRE(curl_e == url_e);
-        std::cout << curl_e << " :: " << url_e << std::endl;
 
         auto curl_d = easy_unescape(curl_ptr, curl_e);
         auto url_d = url_encoder::decode(url_e);
@@ -70,7 +67,6 @@ TEST_CASE("normal curl comparison", "[curl.normal]") {
         auto curl_e = easy_escape(curl_ptr, example);
         auto url_e = url_encoder::encode(example);
         REQUIRE(curl_e == url_e);
-        std::cout << curl_e << " :: " << url_e << std::endl;
 
         auto curl_d = easy_unescape(curl_ptr, curl_e);
         auto url_d = url_encoder::decode(url_e);
@@ -88,7 +84,6 @@ TEST_CASE("curl special decode", "[curl.decode]") {
         std::string example = R"(%27bad_char%XX)";
         auto curl_d = easy_unescape(curl_ptr, example);
         auto url_d = url_encoder::decode(example);
-        std::cout << curl_d << " :: " << url_d << std::endl;
         REQUIRE(curl_d == url_d);
     }
 
@@ -96,16 +91,14 @@ TEST_CASE("curl special decode", "[curl.decode]") {
         std::string example = R"(%25bad%2_char%3)";
         auto curl_d = easy_unescape(curl_ptr, example);
         auto url_d = url_encoder::decode(example);
-        std::cout << curl_d << " :: " << url_d << std::endl;
         REQUIRE(curl_d == url_d);
     }
 
-    // not an error but not what curl does by default
     SECTION("lower case") {
+        // lower case hex isn't an error per say but also not what this lib or curl produces
         std::string example = R"(lower%3f_%3d_%2f%e5)";
         auto curl_d = easy_unescape(curl_ptr, example);
         auto url_d = url_encoder::decode(example);
-        std::cout << curl_d << " :: " << url_d << std::endl;
         REQUIRE(curl_d == url_d);
     }
 }

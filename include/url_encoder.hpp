@@ -1,10 +1,15 @@
 #ifndef URL_ENCODER_HPP
 #define URL_ENCODER_HPP
 
+
+///
+
 #include <string>
 
 namespace {
-bool reserve_char(char c) {
+/// Check if a character is unreserved
+/// https://tools.ietf.org/html/rfc3986#section-2.3
+bool unreserve_char(char c) {
     switch(c) {
         case '0': case '1': case '2': case '3': case '4':
         case '5': case '6': case '7': case '8': case '9':
@@ -25,6 +30,7 @@ bool reserve_char(char c) {
     }
 }
 
+/// Convert hex character integer
 int hexc_to_int(char ch)
 {
     if (ch >= '0' && ch <= '9') return ch - '0';
@@ -33,6 +39,8 @@ int hexc_to_int(char ch)
     return -1;
 }
 
+/// Convert integer to single hex character
+/// Only goes from 0 to 16
 char int_to_hexc(int value) {
     static const char to_hex[17] = { "0123456789ABCDEF" };
     return (value >= 0 && value < 17) ? to_hex[value] : 0;
@@ -41,11 +49,12 @@ char int_to_hexc(int value) {
 
 namespace url_encoder {
 
-std::string encode(std::string const& input) {
+/// URL Encode the input text and returns the encoded string
+inline std::string encode(std::string const& input) {
     std::string output;
     for (char c : input) {
-        // reserved characters can be copied straight
-        if (reserve_char(c)) {
+        // unreserved characters can be copied straight
+        if (unreserve_char(c)) {
             output.push_back(c);
         }
         else {
@@ -60,7 +69,8 @@ std::string encode(std::string const& input) {
     return output;
 }
 
-std::string decode(std::string const& input) {
+/// URL Decode the input text and returns the decoded string
+inline std::string decode(std::string const& input) {
     std::string output;
     for(size_t x=0; x<input.size(); ++x) {
         char next = input[x];
