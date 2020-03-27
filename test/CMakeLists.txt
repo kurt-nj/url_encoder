@@ -47,3 +47,11 @@ if(CURL_FOUND)
 else(CURL_FOUND)
     message(WARNING "Curl not found. Unable to do curl compare.")
 endif(CURL_FOUND)
+
+##############################################
+# Generate code coverage
+##############################################
+if(CODE_COVERAGE)
+    target_compile_options(corsicana_test PUBLIC -O0 --coverage)
+    target_link_libraries(corsicana_test PUBLIC gcov --coverage)
+endif(CODE_COVERAGE)

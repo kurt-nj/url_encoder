@@ -1,0 +1,106 @@
+language: cpp
+matrix:
+  include:
+    ############################################
+    # Linux GCC 4.9
+    ############################################
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+      env:
+        - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+    ############################################
+    # Linux GCC 5
+    ############################################
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+    ############################################
+    # Linux GCC 6
+    ############################################
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+    ############################################
+    # Linux GCC 7 and code coverage generation
+    ############################################
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+            - lcov
+      env:
+        - CODE_COVERAGE=ON
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+    ############################################
+    # Linux GCC 8
+    ############################################
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+      env:
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+    ############################################
+    # Linux GCC 9
+    ############################################
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-9
+      env:
+        - MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
+    ############################################
+    # OSX Builds
+    ############################################
+    - os: osx
+      compiler: clang
+      osx_image: xcode8
+    - os: osx
+      compiler: clang
+      osx_image: xcode9
+    - os: osx
+      compiler: clang
+      osx_image: xcode10
+    - os: osx
+      compiler: clang
+      osx_image: xcode11
+before_install:
+  - eval "${MATRIX_EVAL}"
+script:
+  - cmake -DCODE_COVERAGE=${CODE_COVERAGE} .
+  - cmake --build . -- -j2
+  - ctest
+  # code coverage should only be turned on for one matrix
+  - ci/codecov.sh
