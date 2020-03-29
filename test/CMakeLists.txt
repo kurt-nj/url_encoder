@@ -52,6 +52,6 @@ endif(CURL_FOUND)
 # Generate code coverage
 ##############################################
 if(CODE_COVERAGE)
-    target_compile_options(corsicana_test PUBLIC -O0 --coverage)
-    target_link_libraries(corsicana_test PUBLIC gcov --coverage)
+    target_compile_options(url_encoder_test PUBLIC -O0 --coverage)
+    target_link_libraries(url_encoder_test PUBLIC gcov --coverage)
 endif(CODE_COVERAGE)
