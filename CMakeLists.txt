@@ -35,5 +35,3 @@ endif(BUILD_TESTING)
 ###########################################################
 
 install(DIRECTORY include/ DESTINATION include/)
-
-add_executable(tester test/test.cpp)
