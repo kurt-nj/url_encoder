@@ -1,14 +1,14 @@
 #ifndef URL_ENCODER_HPP
 #define URL_ENCODER_HPP
 
-
-///
+/// Url Encoder
+/// Simple percent encoding utilty compliant with RFC 3986.
 
 #include <string>
 
 namespace {
-/// Check if a character is unreserved
-/// https://tools.ietf.org/html/rfc3986#section-2.3
+// Check if a character is unreserved
+// https://tools.ietf.org/html/rfc3986#section-2.3
 bool unreserve_char(char c) {
     switch(c) {
         case '0': case '1': case '2': case '3': case '4':
@@ -30,7 +30,7 @@ bool unreserve_char(char c) {
     }
 }
 
-/// Convert hex character integer
+// Convert hex character integer
 int hexc_to_int(char ch)
 {
     if (ch >= '0' && ch <= '9') return ch - '0';
@@ -39,11 +39,12 @@ int hexc_to_int(char ch)
     return -1;
 }
 
-/// Convert integer to single hex character
-/// Only goes from 0 to 16
+// Convert integer to single hex character
+// Only goes from 0 to 16
 char int_to_hexc(int value) {
-    static const char to_hex[17] = { "0123456789ABCDEF" };
-    return (value >= 0 && value < 17) ? to_hex[value] : 0;
+    static const char to_hex[16] =
+        { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+    return (value >= 0 && value < 16) ? to_hex[value] : 0;
 }
 } // anonymous namespace
 
