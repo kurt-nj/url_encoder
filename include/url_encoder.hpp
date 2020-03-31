@@ -42,7 +42,7 @@ int hexc_to_int(char ch)
 // Convert integer to single hex character
 // Only goes from 0 to 16
 char int_to_hexc(int value) {
-    static const char to_hex[17] =
+    static const char to_hex[16] =
         { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
     return (value >= 0 && value < 16) ? to_hex[value] : 0;
 }
