@@ -11,7 +11,7 @@ If libcurl is available then a comparison unit test will be run.
 
 ## Usage
 
-```cpp
+```c++
 std::string encoded = url_encoder::encode(input_text);
-std::string decoded = url_encoder::deocde(encoded);
+std::string decoded = url_encoder::decode(encoded);
 ```
